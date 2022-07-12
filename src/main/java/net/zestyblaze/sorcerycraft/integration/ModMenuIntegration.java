@@ -9,8 +9,8 @@ import net.zestyblaze.sorcerycraft.config.SCModConfig;
 
 @Environment(EnvType.CLIENT)
 public class ModMenuIntegration implements ModMenuApi {
-    @Override
-    public ConfigScreenFactory<?> getModConfigScreenFactory() {
-        return parent -> AutoConfig.getConfigScreen(SCModConfig.class, parent).get();
-    }
+	@Override
+	public ConfigScreenFactory<?> getModConfigScreenFactory() {
+		return parent -> AutoConfig.getConfigScreen(SCModConfig.class, parent).get();
+	}
 }

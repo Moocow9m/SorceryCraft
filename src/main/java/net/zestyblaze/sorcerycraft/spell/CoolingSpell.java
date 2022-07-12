@@ -11,33 +11,33 @@ import net.zestyblaze.sorcerycraft.api.spell.Spell;
 import net.zestyblaze.sorcerycraft.api.spell.SpellType;
 
 public class CoolingSpell extends Spell {
-    public CoolingSpell(ResourceLocation id, int level) {
-        super(id, level, SpellType.PROJECTILE);
-    }
+	public CoolingSpell(ResourceLocation id, int level) {
+		super(id, level, SpellType.PROJECTILE);
+	}
 
-    @Override
-    public void execute(Level world, Entity source, Entity attacker, Entity target) {
-        target.setSecondsOnFire(0);
-    }
+	@Override
+	public void execute(Level world, Entity source, Entity attacker, Entity target) {
+		target.setSecondsOnFire(0);
+	}
 
-    @Override
-    public void execute(Level world, Entity source, Entity attacker, BlockHitResult hitResult) {
-        BlockPos blockPos = hitResult.getBlockPos();
-        if (world.getBlockState(blockPos).is(BlockTags.FIRE)) {
-            world.removeBlock(blockPos, false);
-        }
-        if (world.getBlockState(blockPos).hasProperty(BlockStateProperties.LIT) && world.getBlockState(blockPos).getValue(BlockStateProperties.LIT)) {
-            world.setBlock(blockPos, world.getBlockState(blockPos).setValue(BlockStateProperties.LIT, false), 2);
-        }
+	@Override
+	public void execute(Level world, Entity source, Entity attacker, BlockHitResult hitResult) {
+		BlockPos blockPos = hitResult.getBlockPos();
+		if (world.getBlockState(blockPos).is(BlockTags.FIRE)) {
+			world.removeBlock(blockPos, false);
+		}
+		if (world.getBlockState(blockPos).hasProperty(BlockStateProperties.LIT) && world.getBlockState(blockPos).getValue(BlockStateProperties.LIT)) {
+			world.setBlock(blockPos, world.getBlockState(blockPos).setValue(BlockStateProperties.LIT, false), 2);
+		}
 
-        BlockPos sideBlockPos = blockPos.relative(hitResult.getDirection());
-        if (world.getBlockState(sideBlockPos).is(BlockTags.FIRE)) {
-            world.removeBlock(sideBlockPos, false);
-        }
-    }
+		BlockPos sideBlockPos = blockPos.relative(hitResult.getDirection());
+		if (world.getBlockState(sideBlockPos).is(BlockTags.FIRE)) {
+			world.removeBlock(sideBlockPos, false);
+		}
+	}
 
-    @Override
-    public int getMaxLevel() {
-        return 1;
-    }
+	@Override
+	public int getMaxLevel() {
+		return 1;
+	}
 }

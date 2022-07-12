@@ -9,10 +9,10 @@ import net.zestyblaze.sorcerycraft.registry.SCRendererInit;
 
 @Environment(EnvType.CLIENT)
 public class SCClient implements ClientModInitializer {
-    @Override
-    public void onInitializeClient() {
-        SCAnnotationInit.registerAnnotations();
-        SCRendererInit.registerRenders();
-        SCNetworkingInit.registerClientNetworks();
-    }
+	@Override
+	public void onInitializeClient() {
+		SCAnnotationInit.registerAnnotations();
+		SCRendererInit.registerRenders();
+		SCNetworkingInit.registerClientNetworks();
+	}
 }

@@ -10,19 +10,19 @@ import net.zestyblaze.sorcerycraft.api.spell.Spell;
 import net.zestyblaze.sorcerycraft.api.spell.SpellType;
 
 public class LevitateSpell extends Spell {
-    public LevitateSpell(ResourceLocation id, int level) {
-        super(id, level, SpellType.PROJECTILE);
-    }
+	public LevitateSpell(ResourceLocation id, int level) {
+		super(id, level, SpellType.PROJECTILE);
+	}
 
-    @Override
-    public void execute(Level world, Entity source, Entity attacker, Entity target) {
-        if (target instanceof LivingEntity) {
-            ((LivingEntity) target).addEffect(new MobEffectInstance(MobEffects.LEVITATION, 400 + (getLevel() * 160)));
-        }
-    }
+	@Override
+	public void execute(Level world, Entity source, Entity attacker, Entity target) {
+		if (target instanceof LivingEntity) {
+			((LivingEntity) target).addEffect(new MobEffectInstance(MobEffects.LEVITATION, 400 + (getLevel() * 160)));
+		}
+	}
 
-    @Override
-    public int getMaxLevel() {
-        return 2;
-    }
+	@Override
+	public int getMaxLevel() {
+		return 2;
+	}
 }

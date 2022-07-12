@@ -9,19 +9,19 @@ import net.zestyblaze.sorcerycraft.api.spell.Spell;
 import net.zestyblaze.sorcerycraft.api.spell.SpellType;
 
 public class DamageSpell extends Spell {
-    public DamageSpell(ResourceLocation id, int level) {
-        super(id, level, SpellType.PROJECTILE);
-    }
+	public DamageSpell(ResourceLocation id, int level) {
+		super(id, level, SpellType.PROJECTILE);
+	}
 
-    @Override
-    public void execute(Level level, Entity source, Entity attacker, Entity target) {
-        if(target instanceof LivingEntity) {
-            MobEffects.HARM.applyInstantenousEffect(source, attacker, (LivingEntity)target, getLevel(), 1.0d);
-        }
-    }
+	@Override
+	public void execute(Level level, Entity source, Entity attacker, Entity target) {
+		if (target instanceof LivingEntity) {
+			MobEffects.HARM.applyInstantenousEffect(source, attacker, (LivingEntity) target, getLevel(), 1.0d);
+		}
+	}
 
-    @Override
-    public int getMaxLevel() {
-        return 2;
-    }
+	@Override
+	public int getMaxLevel() {
+		return 2;
+	}
 }

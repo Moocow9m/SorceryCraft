@@ -11,19 +11,19 @@ import net.zestyblaze.sorcerycraft.api.spell.SpellType;
 import net.zestyblaze.sorcerycraft.registry.SCMobEffectInit;
 
 public class SteadfastSpell extends Spell {
-    public SteadfastSpell(ResourceLocation id, int level) {
-        super(id, level, SpellType.SELF);
-    }
+	public SteadfastSpell(ResourceLocation id, int level) {
+		super(id, level, SpellType.SELF);
+	}
 
-    @Override
-    public void execute(Level level, ItemStack stack, Entity caster) {
-        if(caster instanceof LivingEntity) {
-            ((LivingEntity)caster).addEffect(new MobEffectInstance(SCMobEffectInit.STEADFAST, 3600, 0, true, true));
-        }
-    }
+	@Override
+	public void execute(Level level, ItemStack stack, Entity caster) {
+		if (caster instanceof LivingEntity) {
+			((LivingEntity) caster).addEffect(new MobEffectInstance(SCMobEffectInit.STEADFAST, 3600, 0, true, true));
+		}
+	}
 
-    @Override
-    public int getMaxLevel() {
-        return 1;
-    }
+	@Override
+	public int getMaxLevel() {
+		return 1;
+	}
 }

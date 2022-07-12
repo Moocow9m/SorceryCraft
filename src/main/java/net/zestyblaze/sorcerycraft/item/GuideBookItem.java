@@ -22,27 +22,28 @@ import javax.annotation.Nonnull;
 import java.util.List;
 
 public class GuideBookItem extends Item {
-    public GuideBookItem(Properties properties) {
-        super(properties);
-    }
+	public GuideBookItem(Properties properties) {
+		super(properties);
+	}
 
-    @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag context) {
-        if(!FabricLoader.getInstance().isModLoaded("patchouli")) {
-            tooltip.add(Component.translatable("text.sorcerycraft.guide_book.fail").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
-        }
-    }
+	@Override
+	public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag context) {
+		if (!FabricLoader.getInstance().isModLoaded("patchouli")) {
+			tooltip.add(Component.translatable("text.sorcerycraft.guide_book.fail").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+		}
+	}
 
-    @Nonnull
-    @Override
-    public InteractionResultHolder<ItemStack> use(Level world, Player user, InteractionHand hand) {
-        if(!FabricLoader.getInstance().isModLoaded("patchouli")) return InteractionResultHolder.fail(user.getItemInHand(hand));
+	@Nonnull
+	@Override
+	public InteractionResultHolder<ItemStack> use(Level world, Player user, InteractionHand hand) {
+		if (!FabricLoader.getInstance().isModLoaded("patchouli"))
+			return InteractionResultHolder.fail(user.getItemInHand(hand));
 
-        if (user instanceof ServerPlayer player) {
-            Book book = BookRegistry.INSTANCE.books.get(Registry.ITEM.getKey(this));
-            PatchouliAPI.get().openBookGUI(player, book.id);
-            user.playSound(PatchouliSounds.getSound(book.openSound, PatchouliSounds.BOOK_OPEN), 1, (float) (0.7 + Math.random() * 0.4));
-        }
-        return super.use(world, user, hand);
-    }
+		if (user instanceof ServerPlayer player) {
+			Book book = BookRegistry.INSTANCE.books.get(Registry.ITEM.getKey(this));
+			PatchouliAPI.get().openBookGUI(player, book.id);
+			user.playSound(PatchouliSounds.getSound(book.openSound, PatchouliSounds.BOOK_OPEN), 1, (float) (0.7 + Math.random() * 0.4));
+		}
+		return super.use(world, user, hand);
+	}
 }

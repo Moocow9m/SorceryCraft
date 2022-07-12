@@ -19,25 +19,25 @@ import net.zestyblaze.sorcerycraft.api.util.SpellHelper;
 import net.zestyblaze.sorcerycraft.util.SpellPlayerEntity;
 
 public class UpdateKnownSpellsS2CPacket {
-    @Environment(EnvType.CLIENT)
-    public static void handle(Minecraft client, ClientPacketListener network, FriendlyByteBuf buf, PacketSender sender) {
-        int id = buf.readInt();
-        client.execute(() -> {
-            ClientLevel world = client.level;
-            if(world != null) {
-                Entity entity = world.getEntity(id);
-                CompoundTag tag = buf.readNbt();
-                if(entity instanceof Player) {
-                    SpellPlayerEntity spellPlayer = (SpellPlayerEntity)entity;
-                    spellPlayer.setDiscoveredSpells(SpellHelper.getSpells(tag));
-                }
-            }
-        });
-    }
+	@Environment(EnvType.CLIENT)
+	public static void handle(Minecraft client, ClientPacketListener network, FriendlyByteBuf buf, PacketSender sender) {
+		int id = buf.readInt();
+		client.execute(() -> {
+			ClientLevel world = client.level;
+			if (world != null) {
+				Entity entity = world.getEntity(id);
+				CompoundTag tag = buf.readNbt();
+				if (entity instanceof Player) {
+					SpellPlayerEntity spellPlayer = (SpellPlayerEntity) entity;
+					spellPlayer.setDiscoveredSpells(SpellHelper.getSpells(tag));
+				}
+			}
+		});
+	}
 
-    public static void send(ServerPlayer player, CompoundTag tag) {
-        FriendlyByteBuf bytes = new FriendlyByteBuf(Unpooled.buffer());
-        bytes.writeNbt(tag);
-        player.connection.send(new ClientboundCustomPayloadPacket(new ResourceLocation(SorceryCraft.MODID, "update_known_spells"), bytes));
-    }
+	public static void send(ServerPlayer player, CompoundTag tag) {
+		FriendlyByteBuf bytes = new FriendlyByteBuf(Unpooled.buffer());
+		bytes.writeNbt(tag);
+		player.connection.send(new ClientboundCustomPayloadPacket(new ResourceLocation(SorceryCraft.MODID, "update_known_spells"), bytes));
+	}
 }

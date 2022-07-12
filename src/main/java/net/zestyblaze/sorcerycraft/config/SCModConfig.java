@@ -12,17 +12,18 @@ import java.lang.annotation.Target;
 
 @Config(name = SorceryCraft.MODID)
 public class SCModConfig implements ConfigData {
-    @Retention(RetentionPolicy.RUNTIME)
-    @Target({ElementType.FIELD})
-    public @interface UsePercentage {
-        double min();
-        double max();
-    }
+	@UsePercentage(min = 0, max = 1)
+	public double failureChance = 0.2;
 
-    @UsePercentage(min = 0, max = 1)
-    public double failureChance = 0.2;
+	public static SCModConfig get() {
+		return AutoConfig.getConfigHolder(SCModConfig.class).getConfig();
+	}
 
-    public static SCModConfig get() {
-        return AutoConfig.getConfigHolder(SCModConfig.class).getConfig();
-    }
+	@Retention(RetentionPolicy.RUNTIME)
+	@Target({ElementType.FIELD})
+	public @interface UsePercentage {
+		double min();
+
+		double max();
+	}
 }

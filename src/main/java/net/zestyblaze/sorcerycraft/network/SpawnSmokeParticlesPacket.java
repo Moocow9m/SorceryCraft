@@ -15,26 +15,26 @@ import net.minecraft.world.entity.player.Player;
 import net.zestyblaze.sorcerycraft.SorceryCraft;
 
 public class SpawnSmokeParticlesPacket {
-    public static final ResourceLocation ID = new ResourceLocation(SorceryCraft.MODID, "spawn_smoke_particles");
+	public static final ResourceLocation ID = new ResourceLocation(SorceryCraft.MODID, "spawn_smoke_particles");
 
-    public static void send(Player player, Entity entity) {
-        FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.buffer());
-        buf.writeInt(entity.getId());
-        ServerPlayNetworking.send((ServerPlayer)player, ID, buf);
-    }
+	public static void send(Player player, Entity entity) {
+		FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.buffer());
+		buf.writeInt(entity.getId());
+		ServerPlayNetworking.send((ServerPlayer) player, ID, buf);
+	}
 
-    public static void handle(Minecraft client, ClientPacketListener network, FriendlyByteBuf buf, PacketSender sender) {
-        int id = buf.readInt();
-        client.execute(() -> {
-            ClientLevel world = client.level;
-            if (world != null) {
-                Entity entity = world.getEntity(id);
-                if (entity != null) {
-                    for (int i = 0; i < 32; i++) {
-                        world.addParticle(ParticleTypes.SMOKE, entity.getRandomX(1), entity.getRandomY(), entity.getRandomZ(1), 0, 0, 0);
-                    }
-                }
-            }
-        });
-    }
+	public static void handle(Minecraft client, ClientPacketListener network, FriendlyByteBuf buf, PacketSender sender) {
+		int id = buf.readInt();
+		client.execute(() -> {
+			ClientLevel world = client.level;
+			if (world != null) {
+				Entity entity = world.getEntity(id);
+				if (entity != null) {
+					for (int i = 0; i < 32; i++) {
+						world.addParticle(ParticleTypes.SMOKE, entity.getRandomX(1), entity.getRandomY(), entity.getRandomZ(1), 0, 0, 0);
+					}
+				}
+			}
+		});
+	}
 }

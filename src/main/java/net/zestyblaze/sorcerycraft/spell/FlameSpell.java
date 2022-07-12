@@ -12,25 +12,25 @@ import net.zestyblaze.sorcerycraft.api.spell.Spell;
 import net.zestyblaze.sorcerycraft.api.spell.SpellType;
 
 public class FlameSpell extends Spell {
-    public FlameSpell(ResourceLocation id, int level) {
-        super(id, level, SpellType.PROJECTILE);
-    }
+	public FlameSpell(ResourceLocation id, int level) {
+		super(id, level, SpellType.PROJECTILE);
+	}
 
-    @Override
-    public void execute(Level world, Entity source, Entity attacker, Entity target) {
-        if (attacker instanceof LivingEntity) {
-            ((LivingEntity) attacker).setLastHurtMob(target);
-        }
-        target.setSecondsOnFire(8 + (getLevel() * 4));
-    }
+	@Override
+	public void execute(Level world, Entity source, Entity attacker, Entity target) {
+		if (attacker instanceof LivingEntity) {
+			((LivingEntity) attacker).setLastHurtMob(target);
+		}
+		target.setSecondsOnFire(8 + (getLevel() * 4));
+	}
 
-    @Override
-    public void execute(Level world, Entity source, Entity attacker, BlockHitResult hitResult) {
-        Items.FLINT_AND_STEEL.useOn(new DirectionalPlaceContext(world, hitResult.getBlockPos(), hitResult.getDirection().getOpposite(), new ItemStack(Items.FLINT_AND_STEEL), hitResult.getDirection()));
-    }
+	@Override
+	public void execute(Level world, Entity source, Entity attacker, BlockHitResult hitResult) {
+		Items.FLINT_AND_STEEL.useOn(new DirectionalPlaceContext(world, hitResult.getBlockPos(), hitResult.getDirection().getOpposite(), new ItemStack(Items.FLINT_AND_STEEL), hitResult.getDirection()));
+	}
 
-    @Override
-    public int getMaxLevel() {
-        return 2;
-    }
+	@Override
+	public int getMaxLevel() {
+		return 2;
+	}
 }

@@ -5,7 +5,7 @@ import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.zestyblaze.sorcerycraft.config.SCModConfig;
 
 public class SCConfigInit {
-    public static void registerConfig() {
-        AutoConfig.register(SCModConfig.class, GsonConfigSerializer::new);
-    }
+	public static void registerConfig() {
+		AutoConfig.register(SCModConfig.class, GsonConfigSerializer::new);
+	}
 }

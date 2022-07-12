@@ -19,26 +19,28 @@ import java.util.Map;
 
 @Mixin(Player.class)
 public class PlayerMixin implements SpellPlayerEntity {
-    @Shadow public AbstractContainerMenu containerMenu;
-    @Unique private Map<ResourceLocation, Integer> discoveredSpells = new HashMap<>();
+	@Shadow
+	public AbstractContainerMenu containerMenu;
+	@Unique
+	private Map<ResourceLocation, Integer> discoveredSpells = new HashMap<>();
 
-    @Inject(method = "readAdditionalSaveData", at = @At("HEAD"))
-    private void readSpells(CompoundTag compound, CallbackInfo ci) {
-        discoveredSpells = SpellHelper.getSpells(compound);
-    }
+	@Inject(method = "readAdditionalSaveData", at = @At("HEAD"))
+	private void readSpells(CompoundTag compound, CallbackInfo ci) {
+		discoveredSpells = SpellHelper.getSpells(compound);
+	}
 
-    @Inject(method = "addAdditionalSaveData", at = @At("HEAD"))
-    private void writeSpells(@NotNull CompoundTag compound, CallbackInfo ci) {
-        compound.put(SpellHelper.SPELL_TAG, SpellHelper.createSpellsTag(discoveredSpells));
-    }
+	@Inject(method = "addAdditionalSaveData", at = @At("HEAD"))
+	private void writeSpells(@NotNull CompoundTag compound, CallbackInfo ci) {
+		compound.put(SpellHelper.SPELL_TAG, SpellHelper.createSpellsTag(discoveredSpells));
+	}
 
-    @Override
-    public void setDiscoveredSpells(Map<ResourceLocation, Integer> spells) {
-        discoveredSpells = spells;
-    }
+	@Override
+	public Map<ResourceLocation, Integer> getDiscoveredSpells() {
+		return discoveredSpells;
+	}
 
-    @Override
-    public Map<ResourceLocation, Integer> getDiscoveredSpells() {
-        return discoveredSpells;
-    }
+	@Override
+	public void setDiscoveredSpells(Map<ResourceLocation, Integer> spells) {
+		discoveredSpells = spells;
+	}
 }

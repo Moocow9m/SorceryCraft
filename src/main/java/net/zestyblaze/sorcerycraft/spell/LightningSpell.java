@@ -13,33 +13,33 @@ import net.zestyblaze.sorcerycraft.api.spell.Spell;
 import net.zestyblaze.sorcerycraft.api.spell.SpellType;
 
 public class LightningSpell extends Spell {
-    public LightningSpell(ResourceLocation id, int level) {
-        super(id, level, SpellType.PROJECTILE);
-    }
+	public LightningSpell(ResourceLocation id, int level) {
+		super(id, level, SpellType.PROJECTILE);
+	}
 
-    @Override
-    public void execute(Level world, Entity source, Entity attacker, Entity target) {
-        strike(world, target.position(), attacker);
-    }
+	@Override
+	public void execute(Level world, Entity source, Entity attacker, Entity target) {
+		strike(world, target.position(), attacker);
+	}
 
-    @Override
-    public void execute(Level world, Entity source, Entity attacker, BlockHitResult hitResult) {
-        strike(world, hitResult.getLocation(), attacker);
-    }
+	@Override
+	public void execute(Level world, Entity source, Entity attacker, BlockHitResult hitResult) {
+		strike(world, hitResult.getLocation(), attacker);
+	}
 
-    private void strike(Level world, Vec3 pos, Entity attacker) {
-        ServerLevel serverLevel = (ServerLevel) world;
-        LightningBolt lightningEntity = EntityType.LIGHTNING_BOLT.create(world);
-        assert lightningEntity != null;
-        lightningEntity.absMoveTo(pos.x, pos.y, pos.z);
-        if (attacker instanceof ServerPlayer) {
-            lightningEntity.setCause((ServerPlayer) attacker);
-        }
-        serverLevel.addFreshEntity(lightningEntity);
-    }
+	private void strike(Level world, Vec3 pos, Entity attacker) {
+		ServerLevel serverLevel = (ServerLevel) world;
+		LightningBolt lightningEntity = EntityType.LIGHTNING_BOLT.create(world);
+		assert lightningEntity != null;
+		lightningEntity.absMoveTo(pos.x, pos.y, pos.z);
+		if (attacker instanceof ServerPlayer) {
+			lightningEntity.setCause((ServerPlayer) attacker);
+		}
+		serverLevel.addFreshEntity(lightningEntity);
+	}
 
-    @Override
-    public int getMaxLevel() {
-        return 1;
-    }
+	@Override
+	public int getMaxLevel() {
+		return 1;
+	}
 }

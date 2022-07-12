@@ -19,24 +19,24 @@ import java.util.Objects;
 
 @SuppressWarnings("deprecation")
 public class HallowedIronBlock extends Block implements EntityBlock {
-    public HallowedIronBlock(Properties properties) {
-        super(properties);
-    }
+	public HallowedIronBlock(Properties properties) {
+		super(properties);
+	}
 
-    @Nullable
-    @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new HallowedIronBlockEntity(pos, state);
-    }
+	@Nullable
+	@Override
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+		return new HallowedIronBlockEntity(pos, state);
+	}
 
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        if(!level.isClientSide() && player.getItemInHand(hand) == ItemStack.EMPTY) {
-            if(MultiblockUtil.checkStructure(level, pos)) {
-                ((HallowedIronBlockEntity)Objects.requireNonNull(level.getBlockEntity(pos))).onUse(level, pos, player);
-            }
-            return InteractionResult.SUCCESS;
-        }
-        return super.use(state, level, pos, player, hand, hit);
-    }
+	@Override
+	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+		if (!level.isClientSide() && player.getItemInHand(hand) == ItemStack.EMPTY) {
+			if (MultiblockUtil.checkStructure(level, pos)) {
+				((HallowedIronBlockEntity) Objects.requireNonNull(level.getBlockEntity(pos))).onUse(level, pos, player);
+			}
+			return InteractionResult.SUCCESS;
+		}
+		return super.use(state, level, pos, player, hand, hit);
+	}
 }

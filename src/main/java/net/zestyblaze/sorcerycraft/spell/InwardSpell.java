@@ -10,19 +10,19 @@ import net.zestyblaze.sorcerycraft.api.spell.SpellType;
 import net.zestyblaze.sorcerycraft.registry.SCMobEffectInit;
 
 public class InwardSpell extends Spell {
-    public InwardSpell(ResourceLocation id, int level) {
-        super(id, level, SpellType.PROJECTILE);
-    }
+	public InwardSpell(ResourceLocation id, int level) {
+		super(id, level, SpellType.PROJECTILE);
+	}
 
-    @Override
-    public void execute(Level level, Entity source, Entity attacker, Entity target) {
-        if(target instanceof LivingEntity) {
-            ((LivingEntity) target).addEffect(new MobEffectInstance(SCMobEffectInit.INWARD, 3600, 0, true, true));
-        }
-    }
+	@Override
+	public void execute(Level level, Entity source, Entity attacker, Entity target) {
+		if (target instanceof LivingEntity) {
+			((LivingEntity) target).addEffect(new MobEffectInstance(SCMobEffectInit.INWARD, 3600, 0, true, true));
+		}
+	}
 
-    @Override
-    public int getMaxLevel() {
-        return 1;
-    }
+	@Override
+	public int getMaxLevel() {
+		return 1;
+	}
 }

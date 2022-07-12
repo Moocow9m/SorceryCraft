@@ -20,48 +20,49 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Map;
 
 public class RandomMultiTypeSpellLootTableFunction extends LootItemConditionalFunction {
-    public RandomMultiTypeSpellLootTableFunction(LootItemCondition[] conditions) {
-        super(conditions);
-    }
+	public RandomMultiTypeSpellLootTableFunction(LootItemCondition[] conditions) {
+		super(conditions);
+	}
 
-    @Override
-    protected ItemStack run(@NotNull ItemStack stack, LootContext context) {
-        while (true) {
-            context.getRandom().nextDouble();
-            Spell[] spells = SpellRegistry.getSpells();
-            int index = context.getRandom().nextInt(spells.length);
-            Map<ResourceLocation, Integer> spell = SpellHelper.getSpells(stack);
-            if(spells[index].getSpellType() == SpellType.BOTH) {
-                spell.put(spells[index].getID(), spells[index].getLevel());
-                SpellHelper.setSpells(stack, spell);
-                return stack;
-            }
-        }
-    }
+	@Override
+	protected ItemStack run(@NotNull ItemStack stack, LootContext context) {
+		while (true) {
+			context.getRandom().nextDouble();
+			Spell[] spells = SpellRegistry.getSpells();
+			int index = context.getRandom().nextInt(spells.length);
+			Map<ResourceLocation, Integer> spell = SpellHelper.getSpells(stack);
+			if (spells[index].getSpellType() == SpellType.BOTH) {
+				spell.put(spells[index].getID(), spells[index].getLevel());
+				SpellHelper.setSpells(stack, spell);
+				return stack;
+			}
+		}
+	}
 
-    @Override
-    public LootItemFunctionType getType() {
-        return Registry.LOOT_FUNCTION_TYPE.get(new ResourceLocation(SorceryCraft.MODID, "random_multi_type_spell"));
-    }
+	@Override
+	public LootItemFunctionType getType() {
+		return Registry.LOOT_FUNCTION_TYPE.get(new ResourceLocation(SorceryCraft.MODID, "random_multi_type_spell"));
+	}
 
-    public static class Factory extends LootItemConditionalFunction.Serializer<RandomMultiTypeSpellLootTableFunction> {
-        public Factory() {}
+	public static class Factory extends LootItemConditionalFunction.Serializer<RandomMultiTypeSpellLootTableFunction> {
+		public Factory() {
+		}
 
-        @Override
-        public RandomMultiTypeSpellLootTableFunction deserialize(@NotNull JsonObject object, @NotNull JsonDeserializationContext deserializationContext, LootItemCondition @NotNull [] conditions) {
-            return (RandomMultiTypeSpellLootTableFunction)new Builder().build();
-        }
-    }
+		@Override
+		public RandomMultiTypeSpellLootTableFunction deserialize(@NotNull JsonObject object, @NotNull JsonDeserializationContext deserializationContext, LootItemCondition @NotNull [] conditions) {
+			return (RandomMultiTypeSpellLootTableFunction) new Builder().build();
+		}
+	}
 
-    public static class Builder extends LootItemConditionalFunction.Builder<RandomMultiTypeSpellLootTableFunction.Builder> {
-        @Override
-        protected Builder getThis() {
-            return this;
-        }
+	public static class Builder extends LootItemConditionalFunction.Builder<RandomMultiTypeSpellLootTableFunction.Builder> {
+		@Override
+		protected Builder getThis() {
+			return this;
+		}
 
-        @Override
-        public LootItemFunction build() {
-            return new RandomMultiTypeSpellLootTableFunction(getConditions());
-        }
-    }
+		@Override
+		public LootItemFunction build() {
+			return new RandomMultiTypeSpellLootTableFunction(getConditions());
+		}
+	}
 }

@@ -7,8 +7,8 @@ import net.zestyblaze.sorcerycraft.network.SpawnSmokeParticlesPacket;
 import net.zestyblaze.sorcerycraft.network.UpdateKnownSpellsS2CPacket;
 
 public class SCNetworkingInit {
-    public static void registerClientNetworks() {
-        ClientPlayNetworking.registerGlobalReceiver(SpawnSmokeParticlesPacket.ID, SpawnSmokeParticlesPacket::handle);
-        ClientPlayNetworking.registerGlobalReceiver(new ResourceLocation(SorceryCraft.MODID, "update_known_spells"), UpdateKnownSpellsS2CPacket::handle);
-    }
+	public static void registerClientNetworks() {
+		ClientPlayNetworking.registerGlobalReceiver(SpawnSmokeParticlesPacket.ID, SpawnSmokeParticlesPacket::handle);
+		ClientPlayNetworking.registerGlobalReceiver(new ResourceLocation(SorceryCraft.MODID, "update_known_spells"), UpdateKnownSpellsS2CPacket::handle);
+	}
 }
