@@ -1,10 +1,10 @@
 package net.zestyblaze.sorcerycraft.registry;
 
-import net.fabricmc.fabric.api.loot.v1.FabricLootPoolBuilder;
-import net.fabricmc.fabric.api.loot.v1.event.LootTableLoadingCallback;
+import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
+import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 import net.minecraft.world.level.storage.loot.providers.number.BinomialDistributionGenerator;
@@ -40,34 +40,36 @@ public class SCLootInit {
     }
 
     public static void registerLootTables() {
-        //Needs to be fixed to register all 3 spell types
-        LootTableLoadingCallback.EVENT.register(((resourceManager, manager, id, supplier, setter) -> {
-            if(isSelectedLootTable(id)) {
-                FabricLootPoolBuilder poolBuilder = FabricLootPoolBuilder.builder()
-                        .rolls(BinomialDistributionGenerator.binomial(2, 0.5f))
-                        .withEntry(LootItem.lootTableItem(SCItemInit.PROJECTILE_SPELL).build())
-                        .withFunction(new RandomProjectileSpellLootTableFunction.Builder().build());
-                supplier.withPool(poolBuilder.build());
+        LootTableEvents.MODIFY.register(((resourceManager, lootManager, id, tableBuilder, source) -> {
+            if(source.isBuiltin() && isSelectedLootTable(id)) {
+                LootPool.Builder poolBuilder = LootPool.lootPool()
+                        .setRolls(BinomialDistributionGenerator.binomial(2, 0.5f))
+                        .with(LootItem.lootTableItem(SCItemInit.PROJECTILE_SPELL).build())
+                        .apply(new RandomProjectileSpellLootTableFunction.Builder().build());
+                tableBuilder.withPool(poolBuilder);
             }
         }));
-        LootTableLoadingCallback.EVENT.register(((resourceManager, manager, id, supplier, setter) -> {
-            if(isSelectedLootTable(id)) {
-                FabricLootPoolBuilder poolBuilder = FabricLootPoolBuilder.builder()
-                        .rolls(BinomialDistributionGenerator.binomial(2, 0.5f))
-                        .withEntry(LootItem.lootTableItem(SCItemInit.SELF_SPELL).build())
-                        .withFunction(new RandomSelfSpellLootTableFunction.Builder().build());
-                supplier.withPool(poolBuilder.build());
+
+        LootTableEvents.MODIFY.register(((resourceManager, lootManager, id, tableBuilder, source) -> {
+            if(source.isBuiltin() && isSelectedLootTable(id)) {
+                LootPool.Builder poolBuilder = LootPool.lootPool()
+                        .setRolls(BinomialDistributionGenerator.binomial(2, 0.5f))
+                        .with(LootItem.lootTableItem(SCItemInit.SELF_SPELL).build())
+                        .apply(new RandomSelfSpellLootTableFunction.Builder().build());
+                tableBuilder.withPool(poolBuilder);
             }
         }));
-        LootTableLoadingCallback.EVENT.register(((resourceManager, manager, id, supplier, setter) -> {
-            if(isSelectedLootTable(id)) {
-                FabricLootPoolBuilder poolBuilder = FabricLootPoolBuilder.builder()
-                        .rolls(BinomialDistributionGenerator.binomial(2, 0.5f))
-                        .withEntry(LootItem.lootTableItem(SCItemInit.MULTI_TYPE_SPELL).build())
-                        .withFunction(new RandomMultiTypeSpellLootTableFunction.Builder().build());
-                supplier.withPool(poolBuilder.build());
+
+        LootTableEvents.MODIFY.register(((resourceManager, lootManager, id, tableBuilder, source) -> {
+            if(source.isBuiltin() && isSelectedLootTable(id)) {
+                LootPool.Builder poolBuilder = LootPool.lootPool()
+                        .setRolls(BinomialDistributionGenerator.binomial(2, 0.5f))
+                        .with(LootItem.lootTableItem(SCItemInit.MULTI_TYPE_SPELL).build())
+                        .apply(new RandomMultiTypeSpellLootTableFunction.Builder().build());
+                tableBuilder.withPool(poolBuilder);
             }
         }));
+
     }
 
     public static void registerLootFunctions() {

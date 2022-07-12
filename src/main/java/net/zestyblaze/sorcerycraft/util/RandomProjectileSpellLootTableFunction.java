@@ -11,10 +11,11 @@ import net.minecraft.world.level.storage.loot.functions.LootItemFunction;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.zestyblaze.sorcerycraft.SorceryCraft;
-import net.zestyblaze.sorcerycraft.api.spell.Spell;
-import net.zestyblaze.sorcerycraft.api.util.SpellHelper;
-import net.zestyblaze.sorcerycraft.api.spell.SpellType;
 import net.zestyblaze.sorcerycraft.api.registry.SpellRegistry;
+import net.zestyblaze.sorcerycraft.api.spell.Spell;
+import net.zestyblaze.sorcerycraft.api.spell.SpellType;
+import net.zestyblaze.sorcerycraft.api.util.SpellHelper;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
@@ -65,3 +66,4 @@ public class RandomProjectileSpellLootTableFunction extends LootItemConditionalF
         }
     }
 }
+

@@ -4,7 +4,6 @@ import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -15,13 +14,13 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.zestyblaze.sorcerycraft.SorceryCraft;
+import net.zestyblaze.sorcerycraft.api.registry.SpellRegistry;
 import net.zestyblaze.sorcerycraft.api.spell.Spell;
 import net.zestyblaze.sorcerycraft.api.spell.SpellType;
-import net.zestyblaze.sorcerycraft.api.registry.SpellRegistry;
+import net.zestyblaze.sorcerycraft.api.util.SpellHelper;
+import net.zestyblaze.sorcerycraft.api.util.SpellSoundUtil;
 import net.zestyblaze.sorcerycraft.entity.SpellEntity;
 import net.zestyblaze.sorcerycraft.registry.SCStatInit;
-import net.zestyblaze.sorcerycraft.api.util.SpellSoundUtil;
-import net.zestyblaze.sorcerycraft.api.util.SpellHelper;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -67,13 +66,15 @@ public class ProjectileSpellItem extends Item {
     public void appendHoverText(@NotNull ItemStack itemStack, Level world, @NotNull List<Component> tooltip, @NotNull TooltipFlag tooltipContext) {
         Map<ResourceLocation, Integer> spells = SpellHelper.getSpells(itemStack);
         for (Map.Entry<ResourceLocation, Integer> entry : spells.entrySet()) {
-            tooltip.add(new TranslatableComponent("spell.type").withStyle(ChatFormatting.GRAY).append(Objects.requireNonNull(SpellHelper.getTranslatedSpellType(entry.getKey(), entry.getValue()))));
+            tooltip.add(Component.translatable("spell.type").withStyle(ChatFormatting.GRAY).append(Objects.requireNonNull(SpellHelper.getTranslatedSpellType(entry.getKey(), entry.getValue()))));
+
         }
     }
 
     @Override
     public void fillItemCategory(@NotNull CreativeModeTab group, @NotNull NonNullList<ItemStack> stacks) {
-        if(allowdedIn(group)) {
+        if(allowedIn(group)) {
+
             Spell[] spells = SpellRegistry.getSpells();
             for (Spell value : spells) {
                 if(value.getSpellType() == SpellType.PROJECTILE) {

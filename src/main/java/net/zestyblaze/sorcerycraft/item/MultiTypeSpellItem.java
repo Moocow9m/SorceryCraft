@@ -4,7 +4,6 @@ import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -81,13 +80,14 @@ public class MultiTypeSpellItem extends Item {
     public void appendHoverText(@NotNull ItemStack itemStack, Level world, @NotNull List<Component> tooltip, @NotNull TooltipFlag tooltipContext) {
         Map<ResourceLocation, Integer> spells = SpellHelper.getSpells(itemStack);
         for (Map.Entry<ResourceLocation, Integer> entry : spells.entrySet()) {
-            tooltip.add(new TranslatableComponent("spell.type").withStyle(ChatFormatting.GRAY).append(Objects.requireNonNull(SpellHelper.getTranslatedSpellType(entry.getKey(), entry.getValue()))));
+            tooltip.add(Component.translatable("spell.type").withStyle(ChatFormatting.GRAY).append(Objects.requireNonNull(SpellHelper.getTranslatedSpellType(entry.getKey(), entry.getValue()))));
         }
     }
 
     @Override
     public void fillItemCategory(@NotNull CreativeModeTab group, @NotNull NonNullList<ItemStack> stacks) {
-        if(allowdedIn(group)) {
+        if(allowedIn(group)) {
+
             Spell[] spells = SpellRegistry.getSpells();
             for (Spell value : spells) {
                 if(value.getSpellType() == SpellType.BOTH) {

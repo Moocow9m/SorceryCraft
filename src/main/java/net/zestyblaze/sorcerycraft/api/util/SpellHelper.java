@@ -1,12 +1,10 @@
 package net.zestyblaze.sorcerycraft.api.util;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.Util;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.*;
-import net.minecraft.network.protocol.game.ClientboundChatPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
@@ -16,8 +14,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.zestyblaze.sorcerycraft.SorceryCraft;
 import net.zestyblaze.sorcerycraft.api.spell.Spell;
-import net.zestyblaze.sorcerycraft.api.spell.SpellType;
 import net.zestyblaze.sorcerycraft.api.registry.SpellRegistry;
+import net.zestyblaze.sorcerycraft.api.spell.SpellType;
+
 import net.zestyblaze.sorcerycraft.config.SCModConfig;
 import net.zestyblaze.sorcerycraft.registry.SCCriteriaInit;
 import net.zestyblaze.sorcerycraft.registry.SCMobEffectInit;
@@ -32,7 +31,7 @@ public class SpellHelper {
     public static final String SPELL_TAG = "Spells";
 
     public static boolean didSpellSucceed(Entity entity) {
-        return ((Player)Objects.requireNonNull(entity)).isCreative() || Math.random() > SCModConfig.get().failureChance || ((LivingEntity) Objects.requireNonNull(entity)).hasEffect(SCMobEffectInit.STEADFAST);
+        return ((Player)Objects.requireNonNull(entity)).isCreative() || Math.random() > SCModConfig.get().failureChance || ((LivingEntity)Objects.requireNonNull(entity)).hasEffect(SCMobEffectInit.STEADFAST);
     }
 
     public static void setSpells(@NotNull ItemStack itemStack, Map<ResourceLocation, Integer> map) {
@@ -44,18 +43,22 @@ public class SpellHelper {
             tag.put(SPELL_TAG, new ListTag());
         }
         assert tag != null;
+
         tag.put(SPELL_TAG, createSpellsTag(map));
+
         itemStack.setTag(tag);
     }
 
     public static @NotNull ListTag createSpellsTag(@NotNull Map<ResourceLocation, Integer> map) {
         ListTag spells = new ListTag();
+
         for (Map.Entry<ResourceLocation, Integer> entry : map.entrySet()) {
             CompoundTag spell = new CompoundTag();
             spell.putString("id", entry.getKey().toString());
             spell.putInt("level", entry.getValue());
             spells.add(spell);
         }
+
         return spells;
     }
 
@@ -99,9 +102,10 @@ public class SpellHelper {
             SpellType spellType = spell.getSpellType();
             if(spellType != null) {
                 switch (spellType) {
-                    case SELF -> text = new TranslatableComponent("spellType.self");
-                    case PROJECTILE -> text = new TranslatableComponent("spellType.projectile");
-                    case BOTH -> text = new TranslatableComponent("spellType.both");
+                    case SELF -> text = Component.translatable("spellType.self");
+                    case PROJECTILE -> text = Component.translatable("spellType.projectile");
+                    case BOTH -> text = Component.translatable("spellType.both");
+
                     default -> throw new IllegalStateException("Unexpected value: " + spellType);
                 }
                 text.withStyle(ChatFormatting.GREEN);
@@ -123,7 +127,8 @@ public class SpellHelper {
     }
 
     public static Component getTranslatedSpellChat(ResourceLocation id, int level) {
-        return new TextComponent("[").append(SpellHelper.getTranslatedSpell(id, level).getString()).append("]").withStyle(ChatFormatting.GREEN);
+        return Component.literal("[").append(SpellHelper.getTranslatedSpell(id, level).getString()).append("]").withStyle(ChatFormatting.GREEN);
+
     }
 
     public static void learnSpells(@NotNull Player player, @NotNull Map<ResourceLocation, Integer> itemSpells) {
@@ -147,7 +152,7 @@ public class SpellHelper {
                     playerSpells.put(spell.getID(), spell.getLevel());
                     assert world.getServer() != null;
                     Component text = getTranslatedSpellChat(spell.getID(), spell.getLevel());
-                    world.getServer().getPlayerList().broadcastAll(new ClientboundChatPacket(new TranslatableComponent("chat." + SorceryCraft.MODID + ".discovered_spell", player.getDisplayName(), text), ChatType.CHAT, Util.NIL_UUID));
+                    world.getServer().getPlayerList().broadcastSystemMessage(Component.translatable("chat." + SorceryCraft.MODID + ".discovered_spell", player.getDisplayName(), text), ChatType.SYSTEM);
                 }
             }
         }
