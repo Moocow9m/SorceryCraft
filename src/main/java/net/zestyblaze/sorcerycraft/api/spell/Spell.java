@@ -2,6 +2,7 @@ package net.zestyblaze.sorcerycraft.api.spell;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
@@ -92,9 +93,11 @@ public abstract class Spell {
      * @return Translated Display Name
      */
     public static MutableComponent getDefaultTranslation(ResourceLocation id, int level) {
+
         MutableComponent text = Component.translatable("spell." + id.getNamespace() + '.' +  id.getPath());
         if (level != 0 || SpellRegistry.getMaxLevel(id) != 1) {
             text.append(" ").append(Component.translatable("enchantment.level." + (level + 1)));
+
         }
         return text;
     }

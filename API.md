@@ -4,27 +4,28 @@
 1. Add Dependency to Gradle
     ```gradle
     maven {
-    name = "SorceryCraft"
-    url "https://maven.concern.i.ng/releases"
-
-   dependencies {
-   modApi "net.zestyblaze:Sorcery:LATEST"
-   LATEST = Latest mod version available on Curseforge for target version
-   }
+        name = "SorceryCraft"
+        url "https://maven.concern.i.ng/releases"
+    }
+    dependencies {
+        modApi "net.zestyblaze:Sorcery:LATEST"
+        {LATEST = Latest mod version available on Curseforge for target version}
+    }
     ```
 2. Add Dependency to ```fabric.mod.json```
     ```json
     {
         "depends": {
-            "sorcerycraft": "1.0.x"
+            "sorcerycraft": "LATEST"
         }
     }
     ```
-3. Create a class extending ```com.thebrokenrail.sorcerycraft.spell.api.Spell```
+   `{LATEST = Latest mod version available on Curseforge for target version}`
+3. Create a class extending ```net.zestyblaze.sorcerycraft.api.Spell```
     ```java
     public class ExampleSpell extends Spell {
        public ExampleSpell(Identifier id, int level) {
-           super(id, level);
+           super(id, level, SpellType);
        }
 
        @Override
@@ -40,6 +41,13 @@
            // Called when ExampleSpell hits a block
            // Override this if you want the spell to affect blocks
        }
+   
+       @Overide
+       public void execute(World world, ItemStack source, Entity caster) {
+           // OPTIONAL
+           // Called when ExampleSpell is used from self spell item
+           // Override this if you want the spell to not summon projectile and only be used on caster
+       }    
 
        @Override
        public int getMaxLevel() {
@@ -57,6 +65,11 @@
        }
     }
     ```
+   SpellType is a new enum system that lets you automatically define what kind of spell you want yours to be. There are three types:
+   - `SpellType.SELF`: A spell that applies an effect to the caster of the spell only
+   - `SpellType.PROJECTILE`: A spell that shoots a projectile which executes a spell on hitting a player or block
+   - `SpellType.BOTH`: A spell that acts as a projectile spell on right click, or a self spell on shift right click
+   You define your SpellType in the constructor at the end by using one of the above fields
 4. Register the spell in your ModInitializer
     ```java
     public class ExampleMod implements ModInitializer {
@@ -86,7 +99,7 @@
             "data": {
               "Spells": [
                 {
-                   "id": "[modid:id_of_spell[",
+                   "id": "[modid:id_of_spell]",
                    "level": [0]
                 }        
               ]      

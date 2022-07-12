@@ -13,6 +13,7 @@ import net.zestyblaze.sorcerycraft.util.RandomMultiTypeSpellLootTableFunction;
 import net.zestyblaze.sorcerycraft.util.RandomProjectileSpellLootTableFunction;
 import net.zestyblaze.sorcerycraft.util.RandomSelfSpellLootTableFunction;
 
+@SuppressWarnings("deprecation")
 public class SCLootInit {
     public static final ResourceLocation[] LOOT_TABLES = new ResourceLocation[]{
             BuiltInLootTables.SIMPLE_DUNGEON,

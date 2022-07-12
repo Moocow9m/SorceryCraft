@@ -16,6 +16,7 @@ import net.zestyblaze.sorcerycraft.SorceryCraft;
 import net.zestyblaze.sorcerycraft.api.spell.Spell;
 import net.zestyblaze.sorcerycraft.api.registry.SpellRegistry;
 import net.zestyblaze.sorcerycraft.api.spell.SpellType;
+
 import net.zestyblaze.sorcerycraft.config.SCModConfig;
 import net.zestyblaze.sorcerycraft.registry.SCCriteriaInit;
 import net.zestyblaze.sorcerycraft.registry.SCMobEffectInit;
@@ -94,7 +95,6 @@ public class SpellHelper {
         return map;
     }
 
-
     public static Component getTranslatedSpellType(ResourceLocation id, int level) {
         Spell spell = SpellRegistry.getSpell(id, level);
         MutableComponent text;
@@ -105,6 +105,7 @@ public class SpellHelper {
                     case SELF -> text = Component.translatable("spellType.self");
                     case PROJECTILE -> text = Component.translatable("spellType.projectile");
                     case BOTH -> text = Component.translatable("spellType.both");
+
                     default -> throw new IllegalStateException("Unexpected value: " + spellType);
                 }
                 text.withStyle(ChatFormatting.GREEN);
@@ -113,7 +114,6 @@ public class SpellHelper {
         }
         return null;
     }
-
 
     public static @NotNull Component getTranslatedSpell(ResourceLocation id, int level) {
         Spell spell = SpellRegistry.getSpell(id, level);
@@ -128,6 +128,7 @@ public class SpellHelper {
 
     public static Component getTranslatedSpellChat(ResourceLocation id, int level) {
         return Component.literal("[").append(SpellHelper.getTranslatedSpell(id, level).getString()).append("]").withStyle(ChatFormatting.GREEN);
+
     }
 
     public static void learnSpells(@NotNull Player player, @NotNull Map<ResourceLocation, Integer> itemSpells) {

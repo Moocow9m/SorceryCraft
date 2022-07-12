@@ -67,12 +67,14 @@ public class ProjectileSpellItem extends Item {
         Map<ResourceLocation, Integer> spells = SpellHelper.getSpells(itemStack);
         for (Map.Entry<ResourceLocation, Integer> entry : spells.entrySet()) {
             tooltip.add(Component.translatable("spell.type").withStyle(ChatFormatting.GRAY).append(Objects.requireNonNull(SpellHelper.getTranslatedSpellType(entry.getKey(), entry.getValue()))));
+
         }
     }
 
     @Override
     public void fillItemCategory(@NotNull CreativeModeTab group, @NotNull NonNullList<ItemStack> stacks) {
         if(allowedIn(group)) {
+
             Spell[] spells = SpellRegistry.getSpells();
             for (Spell value : spells) {
                 if(value.getSpellType() == SpellType.PROJECTILE) {
